@@ -14,7 +14,7 @@ public class DateUtils {
 	public static int calculateAge(String birthDate) throws ParseException {
 
 		// String to Date
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = formatter.parse(birthDate);
 		// Converting obtained Date object to LocalDate object
 		Instant instant = date.toInstant();

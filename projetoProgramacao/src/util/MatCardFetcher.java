@@ -47,8 +47,6 @@ public class MatCardFetcher {
 		//ClearConsole class instance.
 		ClearConsole clCons = new ClearConsole();
 		
-		//Main class instance
-		//Main mn1 = new Main();
 		
 		//String Array, needed to create arguments, in order to be able to load the \'main()\' method, of the Main class.
 		String[] arguments = new String[] {"123"};

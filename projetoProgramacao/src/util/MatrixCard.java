@@ -3,8 +3,6 @@ package util;
 import java.util.LinkedList;
 import java.util.Random;
 
-//import util.MatCardFileHandler;
-
 public class MatrixCard {
 
 	// Foram criadas duas constantes para receber o tamanho do Array e do número de
@@ -29,8 +27,7 @@ public class MatrixCard {
 	 * lista; 1.2. adiciona os arrays a cada posição da lista chamando o método
 	 * create array;
 	 * 
-	 * 2. Chama o método generateRandomPosition para gerar os indices randômicos que
-	 * serão pedidos ao usuario.
+	 * 2. Faz a validação
 	 * 
 	 */
 

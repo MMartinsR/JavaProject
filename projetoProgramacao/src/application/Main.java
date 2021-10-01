@@ -20,6 +20,7 @@ public class Main {
 		Integer inputValues[] = new Integer[3];
 		ClientRepository clientRep = new ClientRepository();
 		ClearConsole clCons = new ClearConsole();
+		String[] arguments = new String[] {"123"};
 
 		int menu = 0;
 		boolean validate = true;
@@ -94,6 +95,7 @@ public class Main {
 				case 'Q':
 					
 					clCons.clear();
+					main(arguments);
 					break;
 					
 				default:
@@ -122,6 +124,15 @@ public class Main {
 		}
 
 	}
+	
+	/**
+	 * clientWithdraw(ClientRepository clientRep, Scanner sc)
+	 * 
+	 * 1. This method asks for a client ID and validates the output of makeWithdraw.
+	 * 
+	 * @param clientRep
+	 * @param sc
+	 */
 
 	private static void clientWithdraw(ClientRepository clientRep, Scanner sc) {
 		System.out.println("Please enter your client ID: ");
@@ -136,6 +147,15 @@ public class Main {
 			System.out.println("The withdrawal was successful");
 		}
 	}
+	
+	/**
+	 * clientDeposit(ClientRepository clientRep, Scanner sc)
+	 * 
+	 * 1. This method asks for an ID and validates the output of the method makeDeposit.
+	 * 
+	 * @param clientRep
+	 * @param sc
+	 */
 
 	private static void clientDeposit(ClientRepository clientRep, Scanner sc) {
 		System.out.println("Please enter your client ID: ");
