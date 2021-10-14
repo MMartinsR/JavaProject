@@ -2,6 +2,8 @@ package repository;
 
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import entities.Client;
 
@@ -24,7 +26,8 @@ public class ClientRepository {
 
 		String input = "";
 		int NIF = 0;
-
+		
+		
 		System.out.print("Name: ");
 		String name = sc.nextLine();
 
@@ -41,13 +44,40 @@ public class ClientRepository {
 			}
 
 		} while (input.length() != 9);
+		
+		//With a regular expression in order to insert the correct date of birth format. 
+		String birthDate = "";
+		boolean matchesRegex = false;
 
-		System.out.print("Birthdate (DD/MM/YYYY): ");
-		String birthDate = sc.nextLine();
+		do {
+			System.out.print("Date of birth (DD/MM/YYYY): ");
+			birthDate = sc.nextLine();
+			
+			// Validate leap years too
+			String regex = "^(?:(?:31(\\/)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+		
+			Pattern dateValidate = Pattern.compile(regex);
+			Matcher matchDate = dateValidate.matcher(birthDate);
+			matchesRegex = matchDate.find();
+			
+			if(matchesRegex) {
+				
+				matchesRegex = true;
+				
+			}else {
+				
+				System.out.println("Please, insert the date of birth in the correct format.\n");
+				
+				matchesRegex = false;
+			}
+			
+		}while(matchesRegex == false);	
+
 		System.out.print("Address: ");
 		String address = sc.nextLine();
 		System.out.print("Inicial Deposit: ");
 		double balance = sc.nextDouble();
+		sc.nextLine();
 
 		cl = new Client(name, NIF, birthDate, address, balance);
 
@@ -92,15 +122,24 @@ public class ClientRepository {
 	 * @param id
 	 */
 
-	private void showClientByID(int id) {
+	public boolean showClientByID(int id) {
+		
+		if (clientList.isEmpty()) {
+
+			System.out.println("Error - There are no clients on the list!");
+			return false;
+		}
 
 		for (int i = 0; i < clientList.size(); i++) {
 
 			if (clientList.get(i).getId() == id) {
 
 				System.out.println(clientList.get(i).toString());
+				return true;
 			}
 		}
+		
+		return false;
 
 	}
 
@@ -121,29 +160,65 @@ public class ClientRepository {
 			System.out.println("Error - There are no clients on the list!");
 			return false;
 		}
+		
+		for (int i = 0; i < clientList.size(); i++) {
+			
+			if (clientList.get(i).getId() == id) {
+				
+				
+				System.out.print("Name: ");
+				String name = sc.nextLine();
+				
+				//With a regular expression in order to insert the correct date of birth format. 
+				String birthDate = "";
+				boolean matchesRegex = false;
 
-		sc.nextLine();
-		System.out.print("Name: ");
-		String name = sc.nextLine();
-		System.out.print("Birthdate (DD-MM-YYYY): ");
-		String birthDate = sc.nextLine();
-		System.out.print("Address: ");
-		String address = sc.nextLine();
+				do {
+					System.out.print("Date of birth (DD/MM/YYYY): ");
+					birthDate = sc.nextLine();
+					
+					String regex = "^(?:(?:31(\\/)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+				
+					Pattern dateValidate = Pattern.compile(regex);
+					Matcher matchDate = dateValidate.matcher(birthDate);
+					matchesRegex = matchDate.find();
+					
+					if(matchesRegex) {
+						
+						matchesRegex = true;
+						
+					}else {
+						
+						System.out.println("Please, insert the date of birth in the correct format.\n");
+						
+						matchesRegex = false;
+					}
+					
+				}while(matchesRegex == false);
+				
+				System.out.print("Address: ");
+				String address = sc.nextLine();
 
-		try {
-			clientList.get(id - 1).setName(name);
-			clientList.get(id - 1).setBirthDate(birthDate);
-			clientList.get(id - 1).setAddress(address);
+				try {
+					clientList.get(id - 1).setName(name);
+					clientList.get(id - 1).setBirthDate(birthDate);
+					clientList.get(id - 1).setAddress(address);
 
-			showClientByID(id);
+					showClientByID(id);
 
-		} catch (Exception e) {
+				} catch (Exception e) {
 
-			e.printStackTrace();
-			return false;
 
+					System.out.println("Error - client update unsuccessful");
+					return false;
+
+				}
+			} else {
+				
+				return false;
+			}
 		}
-
+		
 		return true;
 	}
 
@@ -158,6 +233,12 @@ public class ClientRepository {
 	 */
 
 	public boolean removeClient(int id) {
+		
+		if (clientList.isEmpty()) {
+
+			System.out.println("Error - There are no clients on the list!");
+			return false;
+		}
 
 		try {
 

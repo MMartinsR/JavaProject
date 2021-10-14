@@ -42,8 +42,8 @@ public class Main {
 			switch (menu) {
 			// Generate and validate Matrix Card method
 			case 1:
+		
 				createValidateMatrix(matrix, inputValues, sc);
-
 				break;
 				
 			// Client Area (CRUD)
@@ -53,7 +53,7 @@ public class Main {
 				//sub-menu for every CRUD operation associated with the client class 
 				do {
 				System.out.println("Client Area - Please select one of the following options : \n");
-				System.out.println("C - Create Client \nR - List Clients\nU - Update Client\nD - Delete Client \nE - Deposit \nF - Withdrawal \nQ - Quit to main menu.");
+				System.out.println("C - Create Client \nR - List Clients\nU - Update Client\nD - Delete Client \nE - Search Client \nF - Deposit \nG - Withdrawal\nQ - Quit to main menu.");
 				clientMenu= sc.next().charAt(0);
 							
 				switch(clientMenu) {
@@ -80,15 +80,21 @@ public class Main {
 				case 'e':
 				case 'E':	
 					
-					clientDeposit(clientRep, sc);
+					searchClient(clientRep, sc);
 
 					break;
 					
 				case 'f':
 				case 'F':
 					
-					clientWithdraw(clientRep, sc); 
+					clientDeposit(clientRep, sc);
 				
+					break;
+					
+				case 'g':
+				case 'G':
+					
+					clientWithdraw(clientRep, sc); 
 					break;
 					
 				case 'q':
@@ -123,6 +129,29 @@ public class Main {
 
 		}
 
+	}
+	
+	/**
+	 * searchClient(ClientRepository clientRep, Scanner sc)
+	 * 
+	 * 1. This method is responsible to receive an input and send it to the showCLientByID method, besides it can inform the user if the client is valid.
+	 * 
+	 * @param clientRep
+	 * @param sc
+	 */
+
+	private static void searchClient(ClientRepository clientRep, Scanner sc) {
+		System.out.println("Please enter your client ID: ");
+		int id = sc.nextInt();
+		
+		boolean search;
+		
+		search = clientRep.showClientByID(id);
+		
+		if (!search) {
+			
+			System.out.println("This client ID is invalid or not registered!");
+		}
 	}
 	
 	/**
@@ -192,7 +221,7 @@ public class Main {
 			System.out.println("Client updated sucessfully");
 		} else {
 
-			System.out.println("An error has ocurred when trying to update the client");
+			System.out.println("An error has ocurred when trying to update the client, verify if the id is valid");
 		}
 	}
 	
@@ -208,12 +237,21 @@ public class Main {
 	 */
 
 	private static void createValidateMatrix(MatrixCard matrix, Integer[] inputValues, Scanner sc) {
+
 		matrix.createList();
 		matrix.generateRandomPosition();
+		
 
 		for (int i = 0; i < 3; i++) {
 
 			matrix.printRandomPosition(i);
+			
+			while (!sc.hasNextInt()){
+				
+				System.out.println("Error - Please enter a valid number: ");
+				sc.next();
+				
+			}
 			inputValues[i] = sc.nextInt();
 
 		}
@@ -240,7 +278,6 @@ public class Main {
 	private static void newClient(ClientRepository clientRep) {
 		// createClient
 		
-
 		boolean saved;
 
 		saved = clientRep.createClient();

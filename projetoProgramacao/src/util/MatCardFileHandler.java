@@ -12,7 +12,7 @@ public class MatCardFileHandler {
 		try {
 			PrintWriter prArr = new PrintWriter("matrixCardExtract.txt");
 			
-			prArr.println("------------Cartão Matriz------------");
+			prArr.println("------------ Matrix Card ------------");
 			prArr.print("   1   2   3   4   5   6   7   8   9\n");
 
 			for (int i = 0; i < matrixCard.size(); i++) {

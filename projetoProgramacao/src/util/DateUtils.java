@@ -15,6 +15,7 @@ public class DateUtils {
 
 		// String to Date
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		formatter.setLenient(false);
 		Date date = formatter.parse(birthDate);
 		// Converting obtained Date object to LocalDate object
 		Instant instant = date.toInstant();
